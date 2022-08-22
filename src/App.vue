@@ -1,5 +1,5 @@
 <script>
-import Index from '@/views/Index.vue'
+import Index from '@/views/index.vue'
 
 export default {
 	name: 'Home',

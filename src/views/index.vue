@@ -36,7 +36,7 @@ export default {
       <div v-else class="mx-auto w-100">
         <form
           method="POST"
-          :action="webAppUrl"
+          action="https://script.google.com/macros/s/AKfycbxBGrrdMU-muvwfeevCHIPziNhAkOTaQ8GmHRActB6vkuqv4HGiLd8AFbXuws4S8UaQbg/exec"
           class="d-flex"
         >
           <div class="mr-3">
