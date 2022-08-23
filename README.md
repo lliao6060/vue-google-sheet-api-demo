@@ -9,6 +9,7 @@ VUE_APP_GOOGLE_WEB_APP_ID = '' //google sheet的apps script部屬後得到的id
 ```
 
 ### 讀取資料
+ - [把google sheet當小型資料庫使用2 串接資料篇](https://hackmd.io/@Yan06/Hy-UkzM1i)
  - [Google Sheets API : google-spreadsheet Package](https://www.npmjs.com/package/google-spreadsheet#examples)
   ```javascript
   npm i google-spreadsheet --save
