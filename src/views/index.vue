@@ -1,15 +1,18 @@
 <script>
 import Sheet from '@/components/Sheet.vue'
+import FormTable from '@/components/FormTable.vue'
 
 export default {
 	name: 'Home',
 	components: {
-		Sheet
+		Sheet,
+    FormTable
 	},
   data() {
     return {
       nowTab: 'check',
-      webAppUrl: process.env.VUE_APP_GOOGLE_WEB_APP_URL
+      linkUrl: process.env.VUE_APP_GOOGLE_SHEET_URL,
+      webAppId: process.env.VUE_APP_GOOGLE_WEB_APP_ID
     }
   },
   methods: {
@@ -24,41 +27,31 @@ export default {
   <div class="index w-100">
     <div class="index__wrapper">
       <div class="toggle-action-bar">
-        <button @click="changeTab('check')">查看</button>
-        <button @click="changeTab('add')">新增</button>
+        <a
+          :href="linkUrl"
+          target="_blank"
+          class="w-40 bg-sky-600 py-2 px-2 mr-3 text-center text-white hover:bg-sky-700 text-sm font-bold rounded-md"
+        >View Google Sheet</a>
+        <button
+          @click="changeTab('check')"
+          class="btn-red"
+          :class="{ ['bg-red-600']: nowTab === 'check' }"
+        >查看</button>
+        <button
+          @click="changeTab('add')"
+          class="btn-red"
+          :class="{ ['bg-red-600']: nowTab === 'add' }"
+        >新增</button>
       </div>
       <div class="result-table">{{ nowTab === 'check' ? '查看' : '新增' }}</div>
 
-      <div v-if="nowTab === 'check'" class="w-100">
+      <template v-if="nowTab === 'check'">
         <Sheet />
-      </div>
+      </template>
 
-      <div v-else class="mx-auto w-100">
-        <form
-          method="POST"
-          action="https://script.google.com/macros/s/AKfycbxBGrrdMU-muvwfeevCHIPziNhAkOTaQ8GmHRActB6vkuqv4HGiLd8AFbXuws4S8UaQbg/exec"
-          class="d-flex"
-        >
-          <div class="mr-3">
-            <label>姓名</label>
-            <input name="Name" type="text" placeholder="Name" required />
-          </div>
-
-          <div class="mr-3">
-            <label>電話</label>
-            <input name="Name" type="text" placeholder="Name" required />
-          </div>
-
-          <div class="mr-3">
-            <label>Email</label>
-            <input name="Name" type="text" placeholder="Name" required />
-          </div>
-
-          <div>
-            <button type="submit">送出</button>
-          </div>
-        </form>
-      </div>
+      <template v-else>
+        <FormTable />
+      </template>
     </div>
   </div>
 </template>
@@ -69,16 +62,6 @@ export default {
     padding: 10px;
     .toggle-action-bar {
       @include flex($justify-content: flex-end);
-      >button {
-        margin: 5px;
-        padding: 10px 12px;
-        background: tomato;
-        color: #fff;
-        cursor: pointer;
-        &:hover {
-          background: rgb(192, 63, 40);
-        }
-      }
     }
     .result-table {
       margin: auto;

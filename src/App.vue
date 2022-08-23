@@ -12,11 +12,11 @@ export default {
 
 <template>
   <div id="app">
-    <nav>
+    <nav class="bg-violet-300">
       <h1>google sheet api demo</h1>
     </nav>
 
-    <main class="container full">
+    <main class="w-full">
       <Index />
     </main>
   </div>

@@ -1,48 +1,59 @@
 <template>
-	<div class="d-flex w-100 mx-auto">
-		<div class="table-responsive col-10">
-			<div>
-				<ul class="row py-2 px-3 fw-bold">
-					<li class="col">Date</li>
-					<li class="col">Name</li>
-					<li class="col">Phone</li>
-					<li class="col">Email</li>
-				</ul>
-				<div class="row py-2 px-3">
-					<ul>
-						<li
-							v-for="row in rows"
-							:key="row.id"
-							class="col row"
-						>
-							<p class="col">{{ row.Date }}</p>
-							<p class="col">{{ row.Name }}</p>
-							<p class="col">{{ row.Phone }}</p>
-							<p class="col">{{ row.Email }}</p>
-						</li>
-					</ul>
-				</div>
-			</div>
+	<div class="grid gap-4 my-3">
+		<div class="flex justify-center text-white">
 		</div>
-		<a
-			:href="linkUrl"
-			target="_blank"
-			class="d-block col-2 flex-center"
-		>View Google Sheet</a>
+    <div class="container mx-auto px-4 sm:px-8">
+      <div>
+        <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+          <div
+            class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
+          >
+            <table class="min-w-full leading-normal">
+              <thead>
+                <tr>
+									<th class="form-table-header">Date</th>
+                  <th class="form-table-header">Name</th>
+                  <th class="form-table-header">Phone</th>
+                  <th class="form-table-header">Content</th>
+                </tr>
+              </thead>
+              <tbody>
+								<template v-if="!loading">
+									<tr
+										v-for="row in rows"
+										:key="row.id"
+									>
+										<td class="form-table-content border-dashed border-t border-gray-200">{{ row.Date }}</td>
+										<td class="form-table-content border-dashed border-t border-gray-200">{{ row.Name }}</td>
+										<td class="form-table-content border-dashed border-t border-gray-200">{{ row.Phone }}</td>
+										<td class="form-table-content border-dashed border-t border-gray-200">{{ row.Content }}</td>
+									</tr>
+								</template>
+              </tbody>
+            </table>
+						<Skeleton v-if="loading"/>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 </template>
 
 <script>
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const creds = require('@/client_secret.json');
+import Skeleton from './Skeleton.vue'
+
 	export default {
 		name: "Sheet",
 		props: ["sheet"],
+		components: {
+			Skeleton,
+		},
 		data() {
 			return {
 				rows: [],
-				loading: true,
-				linkUrl: process.env.VUE_APP_GOOGLE_SHEET_URL,
+				loading: false,
 				sheetId: process.env.VUE_APP_GOOGLE_SHEET_ID
 			}
 		},
@@ -50,13 +61,17 @@ const creds = require('@/client_secret.json');
 			async accessSpreadSheet() {
 				const vm = this;
 				const doc = new GoogleSpreadsheet(vm.sheetId);
+				vm.loading = true
 				await doc.useServiceAccountAuth(creds);
 				await doc.loadInfo();
 				const sheet = doc.sheetsByIndex[0];
 				const rows = await sheet.getRows({
 					offset: 1
 				})
-				vm.rows = rows;
+				if(rows) {
+					vm.rows = rows;
+					vm.loading = false
+				}
 			}
 		},
 		created() {
@@ -65,6 +80,5 @@ const creds = require('@/client_secret.json');
 	}
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
 </style>
