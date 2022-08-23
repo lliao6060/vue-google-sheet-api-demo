@@ -43,7 +43,7 @@ export default {
           :class="{ ['bg-red-600']: nowTab === 'add' }"
         >新增</button>
       </div>
-      <div class="result-table">{{ nowTab === 'check' ? '查看' : '新增' }}</div>
+      <div class="bg-sky-200 py-3 text-center text-xl font-bold">{{ nowTab === 'check' ? '查看' : '新增' }}</div>
 
       <template v-if="nowTab === 'check'">
         <Sheet />
@@ -62,14 +62,6 @@ export default {
     padding: 10px;
     .toggle-action-bar {
       @include flex($justify-content: flex-end);
-    }
-    .result-table {
-      margin: auto;
-      background: lightblue;
-      padding: 10px;
-      font-size: 25px;
-      font-weight: bold;
-      @include flex;
     }
   }
 }

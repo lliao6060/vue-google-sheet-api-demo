@@ -32,6 +32,9 @@ export default {
     submit() {
       this.$refs.form.submit()
     },
+  },
+  mounted() {
+    this.buttonClicked = false
   }
 }
 </script>
