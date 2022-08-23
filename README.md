@@ -8,7 +8,6 @@ VUE_APP_GOOGLE_SHEET_ID = '' //google sheet網址上的ID
 VUE_APP_GOOGLE_WEB_APP_ID = '' //google sheet的apps script部屬後得到的id
 ```
 
-
 ### 讀取資料
  - [Google Sheets API : google-spreadsheet Package](https://www.npmjs.com/package/google-spreadsheet#examples)
   ```javascript
@@ -28,6 +27,10 @@ VUE_APP_GOOGLE_WEB_APP_ID = '' //google sheet的apps script部屬後得到的id
 ### 備註
 1. 沒有做RWD
 2. 每隔60秒會自動更新
+
+
+### Live Demo
+[vue2-google-sheet-api-demo](https://vue2-google-sheet-api-demo.herokuapp.com/)
 
 ### Project setup
 ```javascript
