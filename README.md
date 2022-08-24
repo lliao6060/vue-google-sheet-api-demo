@@ -24,6 +24,7 @@ VUE_APP_GOOGLE_WEB_APP_ID = '' //google sheet的apps script部屬後得到的id
 ### use plugins
 - [tailwindcss](https://tailwindcss.com/)
 - [vue-cli](https://cli.vuejs.org/)
+- [vue-sweetalert2](https://github.com/avil13/vue-sweetalert2)
 
 ### 備註
 1. 沒有做RWD

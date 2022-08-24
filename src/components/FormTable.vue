@@ -5,6 +5,20 @@ export default {
     return {
       webAppId: process.env.VUE_APP_GOOGLE_WEB_APP_ID,
       buttonClicked: false,
+      customFormObj: [
+        {
+          name: 'Name',
+          value: 'name',
+        },
+        {
+          name: 'Phone',
+          value: 'phone',
+        },
+        {
+          name: 'Content',
+          value: 'content',
+        },
+      ],
       customForm: {
         name: '',
         phone: '',
@@ -13,7 +27,7 @@ export default {
     }
   },
   methods: {
-    handleCheckForm() {
+    handleCheckForm(e) {
       const vm = this;
       const resultForm = []
       vm.buttonClicked = true
@@ -24,29 +38,47 @@ export default {
       const result = resultForm.every((item) => item === true)
       if(result) {
         vm.buttonClicked = true
-        vm.submit()
+        vm.handleSubmit(e)
       } else {
         vm.buttonClicked = false
       }
     },
-    submit() {
-      this.$refs.form.submit()
+    handleResetForm() {
+      const vm = this;
+      Object.entries(vm.customForm).forEach(([key]) => {
+        vm.customForm[key] = ''
+      })
+    },
+    async handleSubmit(e) {
+      e.preventDefault()
+      const vm = this;
+      const { name, phone, content } = vm.customForm
+      const script_url = `https://script.google.com/macros/s/${vm.webAppId}/exec`
+      const url = `${script_url}?callback=ctrlq&Name=${name}&Phone=${phone}&Content=${content}&action=insert`;
+      try {
+        const res = await vm.$axios.post(url)
+        if(res) {
+          console.log(res)
+          vm.buttonClicked = false
+          vm.$swal({
+            icon: 'success',
+            title: '成功送出!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      } catch (err) {
+        console.log(err)
+      }
+      vm.handleResetForm()
     },
   },
-  created() {
-    this.buttonClicked = false
-  }
 }
 </script>
 
 
 <template>
-  <form
-    ref="form"
-    method="post"
-    :action="`https://script.google.com/macros/s/${webAppId}/exec`"
-    class="my-3 w-75 min-h-screen"
-  >
+  <div class="form-table my-3 w-75">
     <div class="container mx-auto px-4 sm:px-8">
       <div class="py-8">
         <div>
@@ -64,37 +96,21 @@ export default {
               </thead>
               <tbody>
                 <tr>
-                  <td class="form-table-content">
+                  <td
+                    v-for="(formItem, i) in customFormObj"
+                    :key="`${formItem.value}-${i}`"
+                    class="form-table-content"
+                    :class="{ 'cursor-not-allowed': buttonClicked }"
+                  >
                     <input
                       id="form-name"
-                      name="Name"
+                      :name="formItem.name"
                       type="text"
-                      placeholder="Name"
+                      :placeholder="formItem.value"
                       required
                       class="form-input"
-                      v-model="customForm.name"
-                    />
-                  </td>
-                  <td class="form-table-content">
-                    <input
-                      id="form-phone"
-                      name="Phone"
-                      type="text"
-                      placeholder="Phone"
-                      required
-                      class="form-input"
-                      v-model="customForm.phone"
-                    />
-                  </td>
-                  <td class="form-table-content">
-                    <input
-                      id="form-content"
-                      name="Content"
-                      type="text"
-                      placeholder="Content"
-                      required
-                      class="form-input"
-                      v-model="customForm.content"
+                      v-model="customForm[formItem.value]"
+                      :disabled="buttonClicked"
                     />
                   </td>
                 </tr>
@@ -119,7 +135,7 @@ export default {
         </span>
       </button>
     </div>
-  </form>
+  </div>
 </template>
 
 <style lang="scss" scoped>

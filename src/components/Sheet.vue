@@ -32,6 +32,9 @@
               </tbody>
             </table>
 						<Skeleton v-if="loading"/>
+						<div v-if="!rows.length && !loading">
+							<p class="py-3 px-5 text-center text-gray-700 font-bold">No Data</p>
+						</div>
           </div>
         </div>
       </div>
@@ -66,7 +69,7 @@ import Skeleton from './Skeleton.vue'
 				await doc.loadInfo();
 				const sheet = doc.sheetsByIndex[0];
 				const rows = await sheet.getRows({
-					offset: 1
+					offset: 0
 				})
 				if(rows) {
 					vm.rows = rows;

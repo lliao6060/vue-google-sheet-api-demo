@@ -25,8 +25,8 @@ export default {
 
 <template>
   <div class="index w-100">
-    <div class="index__wrapper">
-      <div class="toggle-action-bar">
+    <div class="index__wrapper py-4 px-4">
+      <div class="toggle-action-bar flex items-center justify-end">
         <a
           :href="linkUrl"
           target="_blank"
@@ -57,12 +57,11 @@ export default {
 </template>
 
 <style lang="scss">
-.index {
-  &__wrapper {
-    padding: 10px;
-    .toggle-action-bar {
-      @include flex($justify-content: flex-end);
-    }
-  }
-}
+// .index {
+//   &__wrapper {
+//     .toggle-action-bar {
+//       @include flex($justify-content: flex-end);
+//     }
+//   }
+// }
 </style>

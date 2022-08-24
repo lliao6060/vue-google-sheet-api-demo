@@ -12,11 +12,11 @@ export default {
 
 <template>
   <div id="app">
-    <nav class="bg-violet-300">
+    <nav class="bg-violet-300 text-xl font-bold py-5 px-5">
       <h1>google sheet api demo</h1>
     </nav>
 
-    <main class="w-full">
+    <main class="w-full mx-auto">
       <Index />
     </main>
   </div>
@@ -24,15 +24,4 @@ export default {
 
 <style lang="scss">
 @import 'scss-reset/_reset.scss';
-
-nav {
-  padding: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  background: #ddd;
-}
-
-main {
-  margin: auto;
-}
 </style>
