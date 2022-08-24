@@ -33,7 +33,7 @@ export default {
       this.$refs.form.submit()
     },
   },
-  mounted() {
+  created() {
     this.buttonClicked = false
   }
 }
